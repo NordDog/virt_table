@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <mapApp/>
+    <gridApp/>
   </div>
 </template>
 
 <script>
-import mapApp from './components/map.vue'
+import gridApp from './components/gridApp.vue'
 
 export default {
   name: 'App',
   components: {
-    mapApp
+    gridApp
   }
 }
 </script>

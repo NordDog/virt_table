@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: 'mapApp',
+  name: 'gridApp',
   data(){
     return{
       mapWidth: 7,
