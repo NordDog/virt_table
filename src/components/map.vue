@@ -7,10 +7,13 @@
       <input type="number" name="mapHeight" id="mapHeight" v-model.number="mapHeight">
     </div>
     <div>
-      <div v-for="y in mapHeight" :key="y" class="row">
-        <div v-for="x in mapWidth" :key="x" class="cell" @click="changeLocation(x,y)">
-          <span class="cellindex">{{x}},{{y}}</span>
-          <div class="player" v-if="player.location[0] == x && player.location[1] == y">
+      <div v-for="(y, yIndex) in mapMatrix" :key="yIndex" class="row">
+        <div v-for="(x, xIndex) in y" :key="xIndex" class="cell" :class="{ active_cell: x===1 }" @click="changeLocation(xIndex, yIndex)">
+          <div class="cellbtns">
+            <input type="button" :value="x" @click="changeCellActiveStatus(xIndex, yIndex)">
+          </div>
+          <span class="cellindex">{{xIndex}},{{yIndex}}</span>
+          <div class="player" v-if="player.location[0] == xIndex && player.location[1] == yIndex">
             <img src="../assets/def_avatar.jpg" alt="" class="avatar">
           </div>
         </div>
@@ -28,12 +31,24 @@ export default {
       mapHeight: 7,
       player: {
         location:[4,3]
-      }
+      },
+      mapMatrix:[
+        [1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1],
+      ]
     }
   },
   methods:{
     changeLocation(x,y){
       this.player.location = [x,y];
+    },
+    changeCellActiveStatus(x,y){
+      this.mapMatrix[y][x] = this.mapMatrix[y][x] ? 0 : 1;
     }
   }
 }
@@ -45,14 +60,17 @@ export default {
   justify-content: center;
 }
 .cell{
-  border: 1px solid black;
-  width: 100px;
-  height: 100px;
+  border: 1px solid white;
+  width: 98px;
+  height: 98px;
   position: relative;
   display: flex;
   justify-content: center;
 }
-.cell:hover{
+.active_cell{
+  border: 1px solid black !important;
+}
+.active_cell:hover{
   background-color: antiquewhite;
 }
 .player{
@@ -80,5 +98,10 @@ export default {
   bottom: 0px;
   right: 0px;
   color: gray;
+}
+.cellbtns{
+  position: absolute;
+  right: 0px;
+  top: 0px;
 }
 </style>
